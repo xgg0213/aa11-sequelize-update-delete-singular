@@ -29,10 +29,6 @@ app.put('/puppies/:puppyId', async (req, res, next) => {
         "weightLbs": weightLbs,
         "microchipped": microchipped !== undefined ? microchipped : puppy.microchipped
         
-        // "ageYrs": 1.6,
-        // "weightLbs": 28,
-        // "name": "Princess",
-        // "id": 10
     });
     await puppy.save();
 
@@ -46,6 +42,15 @@ app.put('/puppies/:puppyId', async (req, res, next) => {
 // STEP 2: Delete a puppy by id
 app.delete('/puppies/:puppyId', async (req, res, next) => {
     // Your code here 
+    const puppyId = req.params.puppyId;
+    const puppy = await Puppy.findOne({where: {id: puppyId}});
+    
+    await puppy.destroy();
+
+    res.json({
+        "message":`Successfully updated puppy with id ${puppyId}.`,
+        "puppy": puppy
+    })
 })
 
 
